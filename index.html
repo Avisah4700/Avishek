@@ -3,100 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fresh Mart Shop</title>
+<title>Fresh Mart</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-body {
-  background: #f8f9fa;
-}
-.navbar {
-  background: green;
-}
-.navbar-brand {
-  color: #fff !important;
-  font-weight: bold;
-}
-.product-card {
-  transition: 0.3s;
-}
-.product-card:hover {
-  transform: scale(1.05);
-}
-.btn-buy {
-  background: green;
-  color: white;
-}
+body { background:#f5f5f5; }
+.navbar { background:#232f3e; }
+.navbar-brand { color:#fff !important; font-weight:bold; }
+.product { background:#fff; padding:10px; border-radius:10px; margin:10px; }
+.cart-box { position:fixed; right:10px; top:80px; background:#fff; padding:10px; width:250px; border-radius:10px; }
 </style>
-
 </head>
+
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar p-3">
   <div class="container">
-    <a class="navbar-brand" href="#">🛒 Fresh Mart</a>
+    <span class="navbar-brand">🛒 Fresh Mart</span>
+    <input type="text" id="search" placeholder="Search..." onkeyup="searchProduct()" class="form-control w-50">
   </div>
 </nav>
 
-<!-- Hero -->
-<div class="container text-center my-4">
-  <h1>Fresh Sabji & Grocery Store</h1>
-  <p>Best quality products at best price</p>
+<div class="container mt-3">
+  <div class="row" id="products"></div>
 </div>
 
-<!-- Products -->
-<div class="container">
-  <div class="row">
-
-    <div class="col-md-4 mb-4">
-      <div class="card product-card">
-        <img src="https://via.placeholder.com/300" class="card-img-top">
-        <div class="card-body text-center">
-          <h5>🥔 Aloo</h5>
-          <p>₹15/kg</p>
-          <button class="btn btn-buy" onclick="order('Aloo ₹15/kg')">Buy Now</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 mb-4">
-      <div class="card product-card">
-        <img src="https://via.placeholder.com/300" class="card-img-top">
-        <div class="card-body text-center">
-          <h5>🧅 Pyaz</h5>
-          <p>₹20/kg</p>
-          <button class="btn btn-buy" onclick="order('Pyaz ₹20/kg')">Buy Now</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 mb-4">
-      <div class="card product-card">
-        <img src="https://via.placeholder.com/300" class="card-img-top">
-        <div class="card-body text-center">
-          <h5>🛢️ Fortune Oil</h5>
-          <p>₹150/L</p>
-          <button class="btn btn-buy" onclick="order('Oil ₹150/L')">Buy Now</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
+<!-- Cart -->
+<div class="cart-box">
+  <h5>Cart 🛒</h5>
+  <ul id="cart"></ul>
+  <h6>Total: ₹<span id="total">0</span></h6>
+  <button class="btn btn-success w-100" onclick="checkout()">Checkout</button>
 </div>
-
-<!-- Footer -->
-<footer class="text-center mt-5 p-3 bg-dark text-white">
-  © 2026 Fresh Mart | All Rights Reserved
-</footer>
 
 <script>
-function order(item){
-  let phone = "91XXXXXXXXXX"; // apna number daalo
-  let msg = "Hello, mujhe order karna hai: " + item;
-  window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg));
+let products = [
+  {name:"Aloo", price:15},
+  {name:"Pyaz", price:20},
+  {name:"Oil", price:150}
+  {name:"Noon", price:150}
+  {name:"Saboon", price:150}
+];
+
+let cart = [];
+
+function displayProducts(list){
+  let html="";
+  list.forEach((p,i)=>{
+    html += `
+    <div class="col-md-4">
+      <div class="product text-center">
+        <h5>${p.name}</h5>
+        <p>₹${p.price}</p>
+        <button class="btn btn-warning" onclick="addToCart(${i})">Add to Cart</button>
+      </div>
+    </div>`;
+  });
+  document.getElementById("products").innerHTML = html;
 }
+
+function addToCart(i){
+  cart.push(products[i]);
+  updateCart();
+}
+
+function updateCart(){
+  let list="";
+  let total=0;
+  cart.forEach(item=>{
+    list += `<li>${item.name} - ₹${item.price}</li>`;
+    total += item.price;
+  });
+  document.getElementById("cart").innerHTML = list;
+  document.getElementById("total").innerText = total;
+}
+
+function checkout(){
+  let msg="Order:\n";
+  cart.forEach(i=> msg += i.name + "\n");
+  window.open("https://wa.me/9713417571?text="+encodeURIComponent(msg));
+}
+
+function searchProduct(){
+  let val=document.getElementById("search").value.toLowerCase();
+  let filtered = products.filter(p=>p.name.toLowerCase().includes(val));
+  displayProducts(filtered);
+}
+
+displayProducts(products);
 </script>
 
 </body>
