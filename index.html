@@ -1,12 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fresh Mart Shop</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: #f8f9fa;
+}
+.navbar {
+  background: green;
+}
+.navbar-brand {
+  color: #fff !important;
+  font-weight: bold;
+}
+.product-card {
+  transition: 0.3s;
+}
+.product-card:hover {
+  transform: scale(1.05);
+}
+.btn-buy {
+  background: green;
+  color: white;
+}
+</style>
+
 </head>
 <body>
 
-  <h1>Hello 😄</h1>
-  <p>Website ban gayi!</p>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">🛒 Fresh Mart</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="container text-center my-4">
+  <h1>Fresh Sabji & Grocery Store</h1>
+  <p>Best quality products at best price</p>
+</div>
+
+<!-- Products -->
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-4 mb-4">
+      <div class="card product-card">
+        <img src="https://via.placeholder.com/300" class="card-img-top">
+        <div class="card-body text-center">
+          <h5>🥔 Aloo</h5>
+          <p>₹15/kg</p>
+          <button class="btn btn-buy" onclick="order('Aloo ₹15/kg')">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card product-card">
+        <img src="https://via.placeholder.com/300" class="card-img-top">
+        <div class="card-body text-center">
+          <h5>🧅 Pyaz</h5>
+          <p>₹20/kg</p>
+          <button class="btn btn-buy" onclick="order('Pyaz ₹20/kg')">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card product-card">
+        <img src="https://via.placeholder.com/300" class="card-img-top">
+        <div class="card-body text-center">
+          <h5>🛢️ Fortune Oil</h5>
+          <p>₹150/L</p>
+          <button class="btn btn-buy" onclick="order('Oil ₹150/L')">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center mt-5 p-3 bg-dark text-white">
+  © 2026 Fresh Mart | All Rights Reserved
+</footer>
+
+<script>
+function order(item){
+  let phone = "91XXXXXXXXXX"; // apna number daalo
+  let msg = "Hello, mujhe order karna hai: " + item;
+  window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg));
+}
+</script>
 
 </body>
 </html>
